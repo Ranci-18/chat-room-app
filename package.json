@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A simple chat room app using nodejs",
   "main": "index.js",
+  "type": "module",
   "directories": {
     "lib": "lib"
   },
