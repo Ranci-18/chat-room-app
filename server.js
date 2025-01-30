@@ -36,3 +36,18 @@ function serveStatic(response, cache, absPath) {
         });
     }
 }
+
+let server = http.createServer(function(request, response) {
+    let filePath = false;
+
+    if (request.url == '/') {
+        filePath = 'public/index.html';
+    } else {
+        filePath = 'public' + request.url;
+    }
+    let absPath = './' + filePath;
+    serveStatic(response, cache, absPath);
+    server.listen(3000, function() {
+        console.log("Server listening on port 3000.");
+    })
+})
