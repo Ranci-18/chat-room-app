@@ -12,7 +12,7 @@ function send404(response) {
 }
 
 function sendFile(response, filePath, fileContents) {
-    response.writeHead(200, {'Content-Type': mime.lookup(path.basename(filePath))});
+    response.writeHead(200, {'Content-Type': mime.getType(path.basename(filePath))});
     response.end(fileContents);
 }
 
@@ -20,8 +20,8 @@ function serveStatic(response, cache, absPath) {
     if (cache[absPath]) {
         sendFile(response, absPath, cache[absPath]);
     } else {
-        fs.exists(absPath, function(exists) {
-            if (exists) {
+        fs.stat(absPath, function(err, stats) {
+            if (!err) {
                 fs.readFile(absPath, function(err, data) {
                     if (err) {
                         send404(response);
