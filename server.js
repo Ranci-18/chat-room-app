@@ -2,6 +2,7 @@ import http from 'http';
 import fs from 'fs';
 import path from 'path';
 import mime from 'mime';
+import chatServer from './lib/chat_server';
 
 let cache = {};
 
@@ -52,3 +53,5 @@ let server = http.createServer(function(request, response) {
 server.listen(3005, function() {
     console.log("Server listening on port 3005.");
 });
+
+chatServer.listen(server);
