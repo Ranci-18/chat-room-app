@@ -1,6 +1,17 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
+import os from "os";
+
+function getLocalIP() {
+    const interfaces = os.networkInterfaces();
+    for (const name of Object.keys(interfaces)) {
+        for (const iface of interfaces[name]!) {
+            if (iface.family === "IPv4" && !iface.internal) return iface.address;
+        }
+    }
+    return "localhost";
+}
 
 const app = express();
 const server = http.createServer(app);
@@ -25,6 +36,6 @@ app.get("/", (req, res) => {
 });
 
 const PORT = 3005;
-server.listen(PORT, () => {
-    console.log(`server running at http://localhost:${PORT}`);
+server.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running at http://${getLocalIP()}:${PORT}`);
 });
